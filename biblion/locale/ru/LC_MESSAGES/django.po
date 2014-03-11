@@ -1,0 +1,133 @@
+# translation for django-biblion blog engine.
+# This file is distributed under the same license as the Biblion package.
+# Ivan <limpbrains@mail.ru>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-11 21:03+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Ivan <limpbrains@mail.ru>\n"
+"Language-Team: ru\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: models.py:45
+msgid "Section"
+msgstr "Раздел"
+
+#: models.py:47
+msgid "Title1"
+msgstr "Заголовок"
+
+#: models.py:48
+msgid "Slug"
+msgstr "Слаг"
+
+#: models.py:51
+msgid "Markup"
+msgstr "Разметка"
+
+#: models.py:53
+msgid "Teaser html"
+msgstr ""
+
+#: models.py:54
+msgid "Content html"
+msgstr "Содержимое"
+
+#: models.py:56
+msgid "Tweet text"
+msgstr "Текст твита"
+
+#: models.py:58 models.py:238
+msgid "Created"
+msgstr "Создан"
+
+#: models.py:59 models.py:199
+msgid "Updated"
+msgstr "Обновлен"
+
+#: models.py:60 models.py:200
+msgid "Published"
+msgstr "Опубликован"
+
+#: models.py:66
+msgid "allows url for sharing unpublished posts to unauthenticated users"
+msgstr ""
+"позволяет делится неопубликованной новостью с неавторизованными "
+"пользователями"
+
+#: models.py:107
+msgid "Post"
+msgstr "Новость"
+
+#: models.py:108
+msgid "Posts"
+msgstr "Новости"
+
+#: models.py:162
+msgid ""
+"A secret sharable url for non-authenticated users is generated when you save "
+"this post."
+msgstr ""
+"Секретный url для неавторизированных пользователей. Генерируется когда вы "
+"сохраняете новость."
+
+#: models.py:192
+msgid "Title"
+msgstr "Заголовок"
+
+#: models.py:193
+msgid "Teaser"
+msgstr "Анонс"
+
+#: models.py:195
+msgid "Content"
+msgstr "Содержимое"
+
+#: models.py:202
+msgid "View count"
+msgstr "Количество просмотров"
+
+#: models.py:205
+#, python-format
+msgid "Revision %(time)s for %(slug)s"
+msgstr "Версия %(time)s для %(slug)s"
+
+#: models.py:219
+msgid "Image path"
+msgstr "Изображение"
+
+#: models.py:220
+msgid "URL"
+msgstr "URL"
+
+#: models.py:222 models.py:246
+msgid "Timestamp"
+msgstr "Время"
+
+#: models.py:231
+msgid "Image"
+msgstr "Изображение"
+
+#: models.py:232
+msgid "Images"
+msgstr "Изображения"
+
+#: models.py:237
+msgid "Request data"
+msgstr "Запрос"
+
+#: models.py:245
+msgid "Review text"
+msgstr "Комментарий к рецензии"
+
+#: models.py:247
+msgid "Addressed"
+msgstr "Адресована"

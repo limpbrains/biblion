@@ -1,4 +1,5 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
+
 import json
 try:
     from urllib2 import urlopen  # noqa
@@ -11,6 +12,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 from django.contrib.sites.models import Site
 
@@ -40,28 +42,28 @@ class Post(models.Model):
             ig(settings.BIBLION_SECTIONS, 1)
         )
 
-    section = models.IntegerField(choices=SECTION_CHOICES)
+    section = models.IntegerField(_("Section"), choices=SECTION_CHOICES)
 
-    title = models.CharField(max_length=90)
-    slug = models.SlugField()
+    title = models.CharField(_("Title1"), max_length=90)
+    slug = models.SlugField(_("asasSlug"))
     author = models.ForeignKey(User, related_name="posts")
 
-    markup = models.CharField(max_length=25, choices=settings.BIBLION_MARKUP_CHOICES)
+    markup = models.CharField(_("Markup"), max_length=25, choices=settings.BIBLION_MARKUP_CHOICES)
 
-    teaser_html = models.TextField(editable=False)
-    content_html = models.TextField(editable=False)
+    teaser_html = models.TextField(_("Teaser html"), editable=False)
+    content_html = models.TextField(_("Content html"), editable=False)
 
-    tweet_text = models.CharField(max_length=140, editable=False)
+    tweet_text = models.CharField(_("Tweet text"), max_length=140, editable=False)
 
-    created = models.DateTimeField(default=datetime.now, editable=False)  # when first revision was created
-    updated = models.DateTimeField(null=True, blank=True, editable=False)  # when last revision was created (even if not published)
-    published = models.DateTimeField(null=True, blank=True, editable=False)  # when last published
+    created = models.DateTimeField(_("Created"), default=datetime.now, editable=False)  # when first revision was created
+    updated = models.DateTimeField(_("Updated"), null=True, blank=True, editable=False)  # when last revision was created (even if not published)
+    published = models.DateTimeField(_("Published"), null=True, blank=True, editable=False)  # when last published
 
     secret_key = models.CharField(
         max_length=8,
         blank=True,
         unique=True,
-        help_text="allows url for sharing unpublished posts to unauthenticated users"
+        help_text=_("allows url for sharing unpublished posts to unauthenticated users")
     )
 
     view_count = models.IntegerField(default=0, editable=False)
@@ -102,6 +104,8 @@ class Post(models.Model):
     class Meta:
         ordering = ("-published",)
         get_latest_by = "published"
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
 
     objects = PostManager()
 
@@ -155,7 +159,7 @@ class Post(models.Model):
             if self.secret_key:
                 return reverse("blog_post_secret", kwargs={"post_secret_key": self.secret_key})
             else:
-                return "A secret sharable url for non-authenticated users is generated when you save this post."
+                return _("A secret sharable url for non-authenticated users is generated when you save this post.")
         else:
             return self.get_absolute_url()
 
@@ -185,20 +189,23 @@ class Revision(models.Model):
 
     post = models.ForeignKey(Post, related_name="revisions")
 
-    title = models.CharField(max_length=90)
-    teaser = models.TextField()
+    title = models.CharField(_("Title"), max_length=90)
+    teaser = models.TextField(_("Teaser"))
 
-    content = models.TextField()
+    content = models.TextField(_("Content"))
 
     author = models.ForeignKey(User, related_name="revisions")
 
-    updated = models.DateTimeField(default=datetime.now)
-    published = models.DateTimeField(null=True, blank=True)
+    updated = models.DateTimeField(_("Updated"), default=datetime.now)
+    published = models.DateTimeField(_("Published"), null=True, blank=True)
 
-    view_count = models.IntegerField(default=0, editable=False)
+    view_count = models.IntegerField(_("View count"), default=0, editable=False)
 
     def __unicode__(self):
-        return "Revision %s for %s" % (self.updated.strftime('%Y%m%d-%H%M'), self.post.slug)
+        return _("Revision %(time)s for %(slug)s") % {
+            'time': self.updated.strftime('%Y%m%d-%H%M'),
+            'slug': self.post.slug
+        }
 
     def inc_views(self):
         self.view_count += 1
@@ -209,10 +216,10 @@ class Image(models.Model):
 
     post = models.ForeignKey(Post, related_name="images")
 
-    image_path = models.ImageField(upload_to="images/%Y/%m/%d")
-    url = models.CharField(max_length=150, blank=True)
+    image_path = models.ImageField(_("Image path"), upload_to="images/%Y/%m/%d")
+    url = models.CharField(_("URL"), max_length=150, blank=True)
 
-    timestamp = models.DateTimeField(default=datetime.now, editable=False)
+    timestamp = models.DateTimeField(_("Timestamp"), default=datetime.now, editable=False)
 
     def __unicode__(self):
         if self.pk is not None:
@@ -220,17 +227,21 @@ class Image(models.Model):
         else:
             return "deleted image"
 
+    class Meta:
+        verbose_name = _("Image")
+        verbose_name_plural = _("Images")
+
 
 class FeedHit(models.Model):
 
-    request_data = models.TextField()
-    created = models.DateTimeField(default=datetime.now)
+    request_data = models.TextField(_("Request data"))
+    created = models.DateTimeField(_("Created"), default=datetime.now)
 
 
 class ReviewComment(models.Model):
 
     post = models.ForeignKey(Post, related_name="review_comments")
 
-    review_text = models.TextField()
-    timestamp = models.DateTimeField(default=datetime.now)
-    addressed = models.BooleanField(default=False)
+    review_text = models.TextField(_("Review text"))
+    timestamp = models.DateTimeField(_("Timestamp"), default=datetime.now)
+    addressed = models.BooleanField(_("Addressed"), default=False)
